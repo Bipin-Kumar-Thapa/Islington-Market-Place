@@ -1,0 +1,26 @@
+
+{% extends "master/base.html" %}  {#it extends rest of the html.#}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}  {# We can add multiple tags with its content, it is defined in base.html#}
+
+<h2>Our Products</h2>
+
+{% for product in products %} {#using for loop#}
+
+<h3> {{ product.name }}</h3> {# it will display name from database #}
+
+<p>Price: Rs: {{ product.price }}</p> {# it will display price from database #}
+
+<p>Description: {{ product.description }}</p>
+
+<p>Stock: {{ product.stock }}</p>
+
+
+{% empty %} {# if the database is empty then it will be executed #}
+<p>No products available.</p>
+{% endfor %}
+
+{% endblock %}
+

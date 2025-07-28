@@ -1,0 +1,23 @@
+{% extends "master/base.html" %}  {#it extends rest of the html.#}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}  {# We can add multiple tags with its content, it is defined in base.html#}
+
+<h2>Our Products</h2>
+
+{% for product in products %} {#using for loop#}
+
+<div class="product-card">
+    <a href="{% url 'product_detail' product.id %}"> {# it is generating url dynamically using url name product_detail and passes product.id as an argument #}
+        {{product.name}}
+    </a>
+    <p>{{product.price}}</p>
+</div>
+
+
+{% empty %} {# if the database is empty then it will be executed #}
+<p>No products available.</p>
+{% endfor %}
+
+{% endblock %}

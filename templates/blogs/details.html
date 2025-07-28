@@ -1,0 +1,14 @@
+{% extends "master/base.html" %} 
+
+{% block title %}Details{% endblock %}
+
+{% block content %}  
+
+<h2>Blogs</h2>
+<p><strong>Category:</strong>{{Blog.category}}</p>
+<p><strong>Title:</strong>{{Blog.title}}</p>
+<p><strong>Content:</strong>{{Blog.content}}</p>
+
+<a href="{% url 'blogs' %}"><-- Back To Blog</a> 
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "master/base.html" %}
+
+{% block title %}Blogs{% endblock %}
+
+{% block content %}  {# We can add multiple tags with its content, it is defined in base.html#}
+
+<h2>Our Blogs</h2>
+
+{% for blog in blogs %} {#using for loop#}
+
+<div class="blog-card">
+    <a href="{% url 'details' blog.id %}"> {# it is generating url dynamically using url name product_detail and passes product.id as an argument #}
+        {{blog.title}}
+    </a>
+    <p>{{blog.content}}</p>
+</div>
+
+
+{% empty %} {# if the database is empty then it will be executed #}
+<p>No blog available.</p>
+{% endfor %}
+
+{% endblock %}

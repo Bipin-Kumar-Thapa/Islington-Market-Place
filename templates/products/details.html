@@ -1,0 +1,14 @@
+{% extends "master/base.html" %}  {#it extends rest of the html.#}
+
+{% block title %}Details{% endblock %}
+
+{% block content %}  {# We can add multiple tags with its content, it is defined in base.html#}
+
+<h2>{{product.name}}</h2>
+<p><strong>Category:</strong>{{product.category}}</p>
+<p><strong>Description:</strong>{{product.description}}</p>
+<p><strong>Stock:</strong>{{product.stock}}</p>
+
+<a href="{% url 'index' %}"><-- Back To Products</a> {# It is creating a hyperlink to go back to the product page. Index is name written for product page#}
+
+{% endblock %}
