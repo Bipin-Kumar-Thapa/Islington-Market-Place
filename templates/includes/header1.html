@@ -1,6 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}">MySite</a>
+    <a class="navbar-brand" href="{% url 'home' %}">
+      {% if site_setting.logo%}
+    <img src="{{site_setting.logo.url}}" alt="logo"
+    style="max-height:50px; width:auto;" class="d-line-block align-middle">
+    {% endif %}
+    </a>
     <button
       class="navbar-toggler"
       type="button"

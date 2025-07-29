@@ -7,6 +7,7 @@ class SiteSetting(models.Model):
     meta_keywords = models.CharField(max_length=255, blank=True, null=True)
     logo = models.ImageField(upload_to="photos/logos/", blank=True, null=True)
     favicon = models.ImageField(upload_to="photos/favicons/", blank=True, null=True)
+    site_copy = models.CharField(max_length=200, default="Copyright") 
 
     def __str__(self):
         return "Site Setting"
