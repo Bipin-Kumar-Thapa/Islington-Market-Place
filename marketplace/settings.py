@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-op5x%8248fr$t)7da8aou&8^0y$0of36$$tfdx6z2vpf-q^wav
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'islington-market-place.onrender.com',
+    'https://islington-market-place.onrender.com',
     '127.0.0.1', #for local development
     'localhost',
 ]
