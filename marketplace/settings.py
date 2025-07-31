@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'marketplace.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-            default=os.environ.get('DATBASE_URL')
+            default=os.environ.get('DATABASE_URL')
         )
         #'ENGINE': 'django.db.backends.sqlite3',
         #'NAME': BASE_DIR / 'db.sqlite3',
