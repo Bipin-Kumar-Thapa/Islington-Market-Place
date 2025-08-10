@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'islington-market-place.onrender.com',
+    'www.bipinkumarthapa.com.np',
+    'bipinkumarthapa.com.np', 
     '127.0.0.1', #for local development
     'localhost',
 ]
@@ -86,13 +89,21 @@ WSGI_APPLICATION = 'marketplace.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')  # Corrected the typo here
-    )
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
-}
+
+if 'runserver' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',  # Use SQLite for local development
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL')  # Production DB
+        )
+    }
+
 
 
 # Password validation
@@ -143,6 +154,10 @@ MEDIA_ROOT = BASE_DIR/ 'media'
 
 CSRF_TRUSTED_ORIGINS = [
     'https://islington-market-place.onrender.com',
+    'https://www.bipinkumarthapa.com.np', 
+    'https://bipinkumarthapa.com.np',
+    'http://localhost:8000',  
+    'http://127.0.0.1:8000', 
 ]
 
 # Default primary key field type
