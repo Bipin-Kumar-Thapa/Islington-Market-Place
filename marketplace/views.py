@@ -6,9 +6,16 @@ from blogs.models import blog, Category
 
 
 def home(request):
-    products = Product.objects.all()
-    Blog = blog.objects.all()[:3]
-    return render(request,'home/home1.html',{'products':products, 'Blog':Blog})
+    products = Product.objects.all().filter(status = True)
+    #banners = Banner.objects.all().filter(status = True)
+    #categories = Category.objects.all().filter(status = True)
+    #Blog = blog.objects.all()[:3]
+    context = {
+        'products': products,
+        #'banners': banners,
+        #'categories': categories
+    }
+    return render(request,'home/home1.html', context)
 
 def cart(request):
     return render(request,'cart/cart.html')

@@ -7,6 +7,7 @@ from django.utils.html import format_html
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id','name')
+    prepopulated_fields = {'slug':('name',)}
 
 
 class ProductAdmin(admin.ModelAdmin):

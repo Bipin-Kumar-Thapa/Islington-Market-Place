@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'blogs.apps.BlogsConfig',        #we can write blog only, if we create another blog then it may get confused
     'pages.apps.PagesConfig',
     'sitesetting.apps.SitesettingConfig',
+    'carts.apps.CartsConfig',
 ]
 
 MIDDLEWARE = [
@@ -89,6 +90,12 @@ WSGI_APPLICATION = 'marketplace.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',  # Use SQLite for local development
+#     }
+# }
 
 if 'runserver' in sys.argv:
     DATABASES = {
