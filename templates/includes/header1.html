@@ -1,3 +1,4 @@
+{% load static %}
 <header class="section-header" style="background-color: #edeff1ff;">
   <section class="header-main border-bottom py-2">
     <div class="container-fluid px-4">
@@ -6,7 +7,7 @@
         <!-- Logo (more to the left) -->
         <div class="col-lg-2 col-md-3 col-6 pl-3">
           <a href="/" class="brand-wrap d-inline-block">
-            <img class="logo" src="{{ site_setting.logo.url }}" style="height: 50px; width: auto;" alt="Site Logo" />
+            <img class="logo" src="{{ site_setting.logo.url | default('/static/images/default.png') }}" style="height: 50px; width: auto;" alt="Site Logo" />
           </a>
         </div>
         <!-- Category Dropdown (dynamic) -->
