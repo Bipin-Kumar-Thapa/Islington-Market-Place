@@ -26,7 +26,7 @@ urlpatterns = [
     path('index/', include('products.urls')),
     path('blogs/', include('blogs.urls')),
     path('pages/', include('pages.urls')),
-    path('cart/', views.cart, name='cart'),
+    # path('cart/', views.cart, name='cart'),
     path('checkout/', views.checkout, name='checkout'),
     path('place-order/', views.place_order, name='place_order'),
     path('order-complete/', views.order_complete, name='oder_complete'),

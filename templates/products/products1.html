@@ -1,12 +1,11 @@
-{%extends 'master/base1.html'%}
+{% extends 'master/base1.html' %}
 {% load static %}
 {% block content %}
- 
-    
+
 <!-- ========================= SECTION PAGETOP ========================= -->
 <section class="section-pagetop bg">
   <div class="container">
-    <h2 class="title-page">Our Store</h2>
+    <h2 class="title-page">Our Products</h2>
   </div>
   <!-- container //  -->
 </section>
@@ -20,52 +19,20 @@
         <div class="card">
           <article class="filter-group">
             <header class="card-header">
-              <a
-                href="#"
-                data-toggle="collapse"
-                data-target="#collapse_1"
-                aria-expanded="true"
-                class="">
+              <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
                 <i class="icon-control fa fa-chevron-down"></i>
                 <h6 class="title">Categories</h6>
               </a>
             </header>
             <div class="filter-content collapse show" id="collapse_1" style="">
               <div class="card-body">
-                <ul class="list-menu">
-                  
-                  <li>
-                    <a href="/store/category/tshirt/">
-                      Tshirt 
-                    </a>
-                  </li>
-                  
-                  <li>
-                    <a href="/store/category/electronics/">
-                      Electronics 
-                    </a>
-                  </li>
-                  
-                  <li>
-                    <a href="/store/category/home-living/">
-                      Home &amp; Living 
-                    </a>
-                  </li>
-                  
-                  <li>
-                    <a href="/store/category/books/">
-                      Books 
-                    </a>
-                  </li>
-                  
-                  <li>
-                    <a href="/store/category/accessories/">
-                      Accessories 
-                    </a>
-                  </li>
-                  
-                  
-                </ul>
+                {% for category in categories %}
+                  <a class="dropdown-item" href="{% url 'products_by_category' category.slug %}">
+                    {{ category.name }}
+                  </a>
+                {% empty %}
+                  <span class="dropdown-item text-muted">No categories</span>
+                {% endfor %}
               </div>
               <!-- card-body.// -->
             </div>
@@ -73,13 +40,7 @@
           <!-- filter-group  .// -->
           <article class="filter-group">
             <header class="card-header">
-              <a
-                href="#"
-                data-toggle="collapse"
-                data-target="#collapse_4"
-                aria-expanded="true"
-                class=""
-              >
+              <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
                 <i class="icon-control fa fa-chevron-down"></i>
                 <h6 class="title">Sizes</h6>
               </a>
@@ -90,17 +51,14 @@
                   <input type="checkbox" />
                   <span class="btn btn-light"> XS </span>
                 </label>
-
                 <label class="checkbox-btn">
                   <input type="checkbox" />
                   <span class="btn btn-light"> SM </span>
                 </label>
-
                 <label class="checkbox-btn">
                   <input type="checkbox" />
                   <span class="btn btn-light"> LG </span>
                 </label>
-
                 <label class="checkbox-btn">
                   <input type="checkbox" />
                   <span class="btn btn-light"> XXL </span>
@@ -113,13 +71,7 @@
 
           <article class="filter-group">
             <header class="card-header">
-              <a
-                href="#"
-                data-toggle="collapse"
-                data-target="#collapse_3"
-                aria-expanded="true"
-                class=""
-              >
+              <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
                 <i class="icon-control fa fa-chevron-down"></i>
                 <h6 class="title">Price range</h6>
               </a>
@@ -129,27 +81,26 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label>Min</label>
-                    <!-- <input class="form-control" placeholder="$0" type="number"> -->
                     <select class="mr-2 form-control">
-                      <option value="0">$0</option>
-                      <option value="50">$50</option>
-                      <option value="100">$100</option>
-                      <option value="150">$150</option>
-                      <option value="200">$200</option>
-                      <option value="500">$500</option>
-                      <option value="1000">$1000</option>
+                      <option value="0">Rs.0</option>
+                      <option value="50">Rs.50</option>
+                      <option value="100">Rs.100</option>
+                      <option value="150">Rs.150</option>
+                      <option value="200">Rs.200</option>
+                      <option value="500">Rs.500</option>
+                      <option value="1000">Rs.1000</option>
                     </select>
                   </div>
                   <div class="form-group text-right col-md-6">
                     <label>Max</label>
                     <select class="mr-2 form-control">
-                      <option value="50">$50</option>
-                      <option value="100">$100</option>
-                      <option value="150">$150</option>
-                      <option value="200">$200</option>
-                      <option value="500">$500</option>
-                      <option value="1000">$1000</option>
-                      <option value="2000">$2000+</option>
+                      <option value="50">Rs.50</option>
+                      <option value="100">Rs.100</option>
+                      <option value="150">Rs.150</option>
+                      <option value="200">Rs.200</option>
+                      <option value="500">Rs.500</option>
+                      <option value="1000">Rs.1000</option>
+                      <option value="2000">Rs.2000+</option>
                     </select>
                   </div>
                 </div>
@@ -164,55 +115,63 @@
         <!-- card.// -->
       </aside>
       <!-- col.// -->
+
       <main class="col-md-9">
         <header class="border-bottom mb-4 pb-3">
           <div class="form-inline">
-            <span class="mr-md-auto">8 Items found </span>
+            <span class="mr-md-auto">{{ product_count }} Items found</span>
           </div>
         </header>
         <!-- sect-heading -->
 
         <div class="row">
-          {%for product in products%}
-          <div class="col-md-4">
-            <figure class="card card-product-grid">
-              <div class="img-wrap">
-                {% if product.product_image%}
-                <a href="{{product.get_url}}">
-                  <img src="{{product.product_image.url}}" />
-                </a>
-                {% else %}
-                <img src="{% static 'images/default.png' %}" />
-                {%endif%}
-              </div>
-              <!-- img-wrap.// -->
-              <figcaption class="info-wrap">
-                <div class="fix-height">
-                  <a href="{{product.get_url}}" class="title">
-                    {{product.name}}
-                  </a>
-                  <div class="price-wrap mt-2">
-                    <span class="price">Rs.{{product.price}}</span>
-                    <del class="price-old">Rs.{{product.price}}</del>
+          {% if products %}
+            {% for product in products %}
+              <div class="col-md-4">
+                <figure class="card card-product-grid">
+                  <div class="img-wrap">
+                    {% if product.product_image %}
+                      <a href="{{ product.get_url }}">
+                        <img src="{{ product.product_image.url }}" />
+                      </a>
+                    {% else %}
+                      <img src="{% static 'images/default.png' %}" />
+                    {% endif %}
                   </div>
-                  <!-- price-wrap.// -->
-                  {% if product.low_stock %}
-                    <p class="text-warning small mb-1">Only {{ product.stock }} left in stock!</p>
-                  {% endif %}
-                </div>
-                
-                <a href="{{product.get_url}}" class="btn btn-block btn-primary">View Details </a>
-              </figcaption>
-            </figure>
-          </div>
-          {%endfor%}
-          <!-- col.// -->
+                  <!-- img-wrap.// -->
+                  <figcaption class="info-wrap">
+                    <div class="fix-height">
+                      <a href="{{ product.get_url }}" class="title">{{ product.name }}</a>
+                      <div class="price-wrap mt-2">
+                        {% if product.discount_price %}
+                          <!-- Display discount price with original price crossed out -->
+                          <span class="price">Rs.{{ product.discount_price }}</span>
+                          <del class="price-old">Rs.{{ product.price }}</del>
+                        {% else %}
+                          <!-- If no discount, show the regular price -->
+                          <span class="price">Rs.{{ product.price }}</span>
+                        {% endif %}
+                      </div>
+                      <!-- price-wrap.// -->
+                      {% if product.low_stock %}
+                        <p class="text-warning small mb-1">Only {{ product.stock }} left in stock!</p>
+                      {% endif %}
+                    </div>
+                    <a href="{{ product.get_url }}" class="btn btn-block btn-primary">View Details</a>
+                  </figcaption>
+                </figure>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="col-12 text-center py-5">
+              <p class="text-muted fs-5">No items Found.</p>
+            </div>
+          {% endif %}
         </div>
         <!-- row end.// -->
 
-        {%include 'products/pagination.html'%}
+        {% include 'products/pagination.html' %}
 
-       
       </main>
       <!-- col.// -->
     </div>
@@ -220,5 +179,5 @@
   <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
- 
-{%endblock%}
+
+{% endblock %}

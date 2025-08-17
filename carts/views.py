@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from products.models import Product
 from .models import Cart, CartItem
+from django.contrib import messages
 
 # Create your views here.
 def _cart_id(request):
@@ -34,6 +35,9 @@ def add_cart(request, product_id):
         )
         cart_item.save()
 
+    # Add a success message after adding the product to the cart
+    messages.success(request, f'{product.name} has been added to your cart!')
+
     return redirect('cart')
 
 def remove_cart(request, product_id):
@@ -45,6 +49,7 @@ def remove_cart(request, product_id):
         cart_item.save()
     else:
         cart_item.delete()
+    
     return redirect('cart')
 
 def remove_cart_item(request, product_id):
@@ -52,12 +57,14 @@ def remove_cart_item(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart_item = CartItem.objects.get(product=product, cart=cart)
     cart_item.delete()
+    # Add a remove message after adding the product to the cart
+    
+    messages.success(request, f'{product.name} has been removed from your cart!')
 
     return redirect('cart')
 
 
-def cart(request, total=0, quantity=0, cart_items = None):
-
+def cart(request, total=0, quantity=0, cart_items=None):
     tax = 0
     grand_total = 0
     
@@ -66,15 +73,20 @@ def cart(request, total=0, quantity=0, cart_items = None):
         cart_items = CartItem.objects.filter(cart=cart, is_active=True)
 
         for cart_item in cart_items:
-            total += (cart_item.product.price*cart_item.quantity)
+            product = cart_item.product
+            # Check if there is a discount, use discount_price if available
+            price = product.discount_price if product.discount_price else product.price
+
+            total += (price * cart_item.quantity)
             quantity += cart_item.quantity
 
-            stock = cart_item.product.stock
+            stock = product.stock
             cart_item.out_of_stock = stock <= 0
             cart_item.low_stock = 0 < stock <= 5
-        
-        tax = (2*total)/100
-        grand_total = total+tax
+
+        # Calculate tax (2% in this case)
+        tax = (2 * total) / 100
+        grand_total = total + tax
 
     except ObjectDoesNotExist:
         pass
@@ -84,6 +96,6 @@ def cart(request, total=0, quantity=0, cart_items = None):
         'quantity': quantity,
         'cart_items': cart_items,
         'tax': tax,
-        'grand_total':grand_total
+        'grand_total': grand_total
     }
     return render(request, 'cart/cart.html', context)
